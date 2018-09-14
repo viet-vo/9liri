@@ -4,9 +4,10 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const request = require("request");
 const Spotify = require("node-spotify-api");
+const keys = require("./keys")
+const spotify = new Spotify(keys.spotify);
 
 
-// var spotify = new Spotify(keys.spotify);
 let resA = "";
 let resB = "";
 inquirer
@@ -38,22 +39,24 @@ inquirer
         resA = answers.a;
         resB = answers.b;
 
-        switch (resA) {
-            case "concert-this":
-                bands();
-                break;
+        function switchStatement() {
+            switch (resA) {
+                case "concert-this":
+                    bands();
+                    break;
 
-            case "spotify-this":
-                spotifyThis();
-                break;
+                case "spotify-this":
+                    spotifyThis();
+                    break;
 
-            case "movie-this":
-                omdb();
-                break;
+                case "movie-this":
+                    omdbThis();
+                    break;
 
-            case "do-what-it-says":
-                doThis();
-                break;
+                case "do-what-it-says":
+                    doThis();
+                    break;
+            }
         }
     });
 
@@ -63,7 +66,7 @@ function lineDiv() {
 
 function bands() {
     let artist = resB;
-    const bandURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
+    const bandURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     request(bandURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             const venue = JSON.parse(body)[0].venue;
@@ -82,10 +85,6 @@ function spotifyThis() {
     if (resB == "") {
         song = "never gonna give you up";
     }
-    const spotify = new Spotify({
-        id: "76200a5ac1f7486793be8f7e5d7b7340",
-        secret: "916626bdbbef43b3af81acaa0e48f243"
-    });
     spotify.search({
         type: 'track',
         query: song,
@@ -107,10 +106,37 @@ function spotifyThis() {
     });
 };
 
-function omdb() {
-
+function omdbThis() {
+    let movieSearch = resB;
+    if (resB == "") {
+        movieSearch = "Mr. Nobody";
+    };
+    const omdbURL = "http://www.omdbapi.com/?t=" + movieSearch + "&y=&plot=short&apikey=trilogy";
+    request(omdbURL, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            lineDiv();
+            console.log("Title: " + JSON.parse(body).Title);
+            console.log("Release Year: " + JSON.parse(body).Year);
+            console.log("IMDB Rating: " + JSON.parse(body).Ratings[0].Value);
+            console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+            console.log("Country Release: " + JSON.parse(body).Country);
+            console.log("Language: " + JSON.parse(body).Language);
+            console.log("Plot: " + JSON.parse(body).Plot);
+            console.log("Featured Actors: " + JSON.parse(body).Actors);
+            lineDiv();
+        }
+    });
 };
 
 function doThis() {
-
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        var dataArr = data.split(",");
+        resA = dataArr[0];
+        resB = dataArr[1];
+        console.log(resA);
+        console.log(resB);
+    });
 };
