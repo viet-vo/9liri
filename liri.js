@@ -26,15 +26,15 @@ inquirer
     .then(answers => {
 
         let data = answers.a + ", " + answers.b + "||";
-        // fs.appendFile("log.txt", data, function (err) {
+        fs.appendFile("log.txt", data, function (err) {
 
-        //     if (err) {
-        //         return console.log(err);
-        //     }
+            if (err) {
+                return console.log(err);
+            }
 
-        //     console.log("random.txt was updated!");
+            console.log("random.txt was updated!");
 
-        // });
+        });
 
         resA = answers.a;
         resB = answers.b;
