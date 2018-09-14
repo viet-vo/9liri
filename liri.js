@@ -79,15 +79,31 @@ function bands() {
 
 function spotifyThis() {
     let song = resB;
+    if (resB == "") {
+        song = "never gonna give you up";
+    }
     const spotify = new Spotify({
         id: "76200a5ac1f7486793be8f7e5d7b7340",
         secret: "916626bdbbef43b3af81acaa0e48f243"
-      });
-      spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+    });
+    spotify.search({
+        type: 'track',
+        query: song,
+        limit: 1
+    }, function (err, data) {
         if (err) {
-          return console.log('Error occurred: ' + err);
+            return console.log('Error occurred: ' + err);
         }
-        console.log(data);
+        const artistName = data.tracks.items[0].artists[0].name;
+        const songName = data.tracks.items[0].name;
+        const songPrev = data.tracks.items[0].preview_url;
+        const album = data.tracks.items[0].album.name;
+        lineDiv();
+        console.log("Artist(s): " + artistName);
+        console.log("Song Name: " + songName);
+        console.log("Song Preview: " + songPrev);
+        console.log("Album: " + album);
+        lineDiv();
     });
 };
 
