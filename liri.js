@@ -39,25 +39,8 @@ inquirer
         resA = answers.a;
         resB = answers.b;
 
-        function switchStatement() {
-            switch (resA) {
-                case "concert-this":
-                    bands();
-                    break;
-
-                case "spotify-this":
-                    spotifyThis();
-                    break;
-
-                case "movie-this":
-                    omdbThis();
-                    break;
-
-                case "do-what-it-says":
-                    doThis();
-                    break;
-            }
-        }
+    
+        switchStatement();
     });
 
 function lineDiv() {
@@ -136,7 +119,26 @@ function doThis() {
         var dataArr = data.split(",");
         resA = dataArr[0];
         resB = dataArr[1];
-        console.log(resA);
-        console.log(resB);
+        switchStatement();
     });
+};
+
+function switchStatement() {
+    switch (resA) {
+        case "concert-this":
+            bands();
+            break;
+
+        case "spotify-this":
+            spotifyThis();
+            break;
+
+        case "movie-this":
+            omdbThis();
+            break;
+
+        case "do-what-it-says":
+            doThis();
+            break;
+    }
 };
