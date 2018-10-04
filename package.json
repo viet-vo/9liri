@@ -1,0 +1,32 @@
+{
+  "name": "liri",
+  "version": "1.0.0",
+  "description": "\"cli based siri-like application\"",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viet-vo/9liri.git"
+  },
+  "keywords": [
+    "homework",
+    "cli",
+    "npm",
+    "node"
+  ],
+  "author": "Viet Vo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viet-vo/9liri/issues"
+  },
+  "homepage": "https://github.com/viet-vo/9liri#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "inquirer": "^6.2.0",
+    "moment": "^2.22.2",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.88.0"
+  }
+}
